@@ -22,4 +22,6 @@ if [ -n "$AVG" ]; then
     fi
 fi
 
+# successful installation marker
+
 exit 0
