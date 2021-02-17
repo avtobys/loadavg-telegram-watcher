@@ -1,8 +1,8 @@
 #/bin/bash
-AVG_MAX=3                     # maximum load avg
-BOT_ID="your_telegram_bot_id" # t.me bot id
-CHAT_ID="your_chat_id"        # t.me chat id
-PASTE_KEY="your_paste_key"    # pastebin.com api developer key
+AVG_MAX=3                        # maximum load avg
+BOT_ID="your_telegram_bot_token" # t.me bot id
+CHAT_ID="your_chat_id"           # t.me chat id
+PASTE_KEY="your_paste_key"       # pastebin.com api developer key
 
 TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
 if [ $(command -v ip) ]; then
