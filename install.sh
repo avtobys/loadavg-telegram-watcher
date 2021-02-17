@@ -19,7 +19,7 @@ install_telegram() {
     printf "$SET_BOT_ID\n\n"
     echo -n 'Enter your telegram chat id: '
     read CHAT_ID
-    SET_CHAT_ID="Telegram chat id set: $BOT_ID"
+    SET_CHAT_ID="Telegram chat id set: $CHAT_ID"
     TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
     printf "$SET_CHAT_ID\n\n"
     if [ `command -v ip` ]; then
@@ -34,6 +34,14 @@ install_telegram() {
 }
 
 install_la
+
+
+SCRIPT=$(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/loadavg_watcher | sed -r "s/AVG_MAX=([0-9]+)/AVG_MAX=$AVG_MAX")
+
+echo $SCRIPT
+
 install_telegram
+echo -n 'Enter your pastebin.com api developer key(optional): '
+read PASTE_KEY
 
 exit 0

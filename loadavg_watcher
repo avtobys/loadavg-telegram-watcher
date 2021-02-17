@@ -21,3 +21,5 @@ if [ -n "$AVG" ]; then
         if [ -n "$AVG" ]; then curl -X POST --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N NORM $UPTIME" $TG_URL; fi
     fi
 fi
+
+exit 0
