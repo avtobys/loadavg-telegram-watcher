@@ -53,6 +53,18 @@ if [ "$(echo $SCRIPT | sed -n 's/.*\(successful installation marker\).*/\1/ip;T;
     exit 1
 fi
 
-echo $SCRIPT
+if [ ! -d "/usr/local/bin" ]; then
+    printf "\033[0;31mNo such directory /usr/local/bin\033[0m\n"
+    exit 1
+fi
+
+if [ ! -d "/etc/cron.d" ]; then
+    printf "\033[0;31mNo such directory /etc/cron.d\033[0m\n"
+    exit 1
+fi
+
+echo $SCRIPT > /usr/local/bin/loadavg_watcher
+chmod +x /usr/local/bin/loadavg_watcher
+echo '* * * * * root /usr/local/bin/loadavg_watcher > /dev/null 2>&1' > /etc/cron.d/loadavg_watcher
 
 exit 0

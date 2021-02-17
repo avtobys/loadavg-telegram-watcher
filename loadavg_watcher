@@ -5,7 +5,9 @@ CHAT_ID="your_chat_id"        # t.me chat id
 PASTE_KEY="your_paste_key"    # pastebin.com api developer key
 
 TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
-IP=$(ip route get 8.8.8.8 | grep src | awk '{print $NF}')
+if [ $(command -v ip) ]; then
+    IP=$(ip route get 8.8.8.8 | grep src | awk '{print $NF}')
+fi
 AVG=$(awk -v avg_max=${AVG_MAX} '$1>avg_max{print $1}' /proc/loadavg)
 N=$'\n'
 if [ -n "$AVG" ]; then
@@ -14,7 +16,7 @@ if [ -n "$AVG" ]; then
         PASTE="$UPTIME $N $(ps -eo pid,ppid,user,cmd,\%mem,\%cpu --sort=-\%mem | head && mysqladmin processlist)"
         PASTE_RES=$(curl -X POST --data "api_option=paste&api_user_key=&api_paste_private=1&api_paste_name=high load&api_paste_expire_date=1D&api_paste_format=text&api_dev_key=$PASTE_KEY&api_paste_code=$PASTE" https://pastebin.com/api/api_post.php 2>/dev/null | sed 's/pastebin\.com\//pastebin.com\/raw\//')
     fi
-    if [ -n "$BOT_ID" -a  -n "$CHAT_ID"]; then
+    if [ -n "$BOT_ID" -a -n "$CHAT_ID"]; then
         curl -X POST --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N HIGH $UPTIME $N $PASTE_RES" $TG_URL >/dev/null 2>&1
         sleep 61s
         AVG=$(awk -v avg_max=${AVG_MAX} '$1<=avg_max{print $1}' /proc/loadavg)
