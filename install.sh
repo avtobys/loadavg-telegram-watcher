@@ -41,6 +41,7 @@ install_telegram
 echo -n 'Enter your pastebin.com api developer key(optional): '
 read PASTE_KEY
 
+IFS=""
 SCRIPT=$(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/loadavg_watcher |
     sed -r "s/AVG_MAX=([0-9]+)/AVG_MAX=$AVG_MAX/" |
     sed -r "s/BOT_ID=\"[^\"]+\"/BOT_ID=\"$BOT_ID\"/" |
