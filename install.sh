@@ -24,13 +24,13 @@ install_telegram() {
     echo $SET_CHAT_ID
     IP=$(command -v ip && ip route get 8.8.8.8 | grep src | awk '{print $NF}')
     N=$'\n'
-    TG_RES=$(curl -s -X POST --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N Settings are almost ready $N $SET_AVG_MAX $N $SET_BOT_ID $N $SET_CHAT_ID" $TG_URL | -r 's/.*"ok"[[:space:]]*:[[:space:]]*(true)[[:space:]]*,[[:space:]]*"result".*/\1/')
+    TG_RES=$(curl -s -X POST --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N Settings are almost ready $N $SET_AVG_MAX $N $SET_BOT_ID $N $SET_CHAT_ID" $TG_URL | sed -r 's/.*"ok"[[:space:]]*:[[:space:]]*(true)[[:space:]]*,[[:space:]]*"result".*/\1/')
     if [ "$TG_RES" != "true" ]; then
         install_telegram
     fi  
 }
 
-install_telegram
 install_la
+install_telegram
 
 exit 0
