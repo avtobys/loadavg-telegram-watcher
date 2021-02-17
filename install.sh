@@ -1,6 +1,7 @@
 #!/bin/bash
 
 install_la() {
+    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors this computer: $(nproc)\n\n"
     echo -n 'Enter setup value to max load average(1 min): '
     read AVG_MAX
     if (($(($AVG_MAX * 1)) > 0)); then
@@ -34,14 +35,17 @@ install_telegram() {
 }
 
 install_la
-
-
-SCRIPT=$(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/loadavg_watcher | sed -r "s/AVG_MAX=([0-9]+)/AVG_MAX=$AVG_MAX/")
-
-echo $SCRIPT
-
 install_telegram
 echo -n 'Enter your pastebin.com api developer key(optional): '
 read PASTE_KEY
+
+IFS=""
+SCRIPT=$(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/loadavg_watcher \
+| sed -r "s/AVG_MAX=([0-9]+)/AVG_MAX=$AVG_MAX/" \
+| sed -r "s/BOT_ID=\"[^\"]+\"/BOT_ID=\"$BOT_ID\"/" \
+| sed -r "s/CHAT_ID=\"[^\"]+\"/CHAT_ID=\"$CHAT_ID\"/" \
+| sed -r "s/PASTE_KEY=\"[^\"]+\"/PASTE_KEY=\"$PASTE_KEY\"/")
+
+echo $SCRIPT
 
 exit 0
