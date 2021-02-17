@@ -1,6 +1,13 @@
 # loadavg-telegram-watcher
-monitors loadavg and sends problem messages to Telegram
+monitors the load average server and in case of problems sends problem messages to Telegram, sends paste to pastebin.com with info of user processes sorted by cpu usage and current processlist mysql. Pastebin link is included in the telegram message.
 
-place this script in the directory /etc/cron.d and get messages about the load
+easy install with customization:
 
-\* \* \* \* \* root (AVG_MAX=0.5;BOT_ID="your_telegram_bot_id";CHAT_ID="your_chat_id";AVG=$(awk -v avg_max=${AVG_MAX} '$1>avg_max{print $1}' /proc/loadavg);if [ -n "$AVG" ]; then curl -L "https://api.telegram.org/bot$BOT_ID/sendMessage?chat_id=$CHAT_ID&parse_mode=html&text=HIGH AVG: $AVG";sleep 61s;AVG=$(awk -v avg_max=${AVG_MAX} '$1<=avg_max{print $1}' /proc/loadavg);if [ -n "$AVG" ]; then curl -L "https://api.telegram.org/bot$BOT_ID/sendMessage?chat_id=$CHAT_ID&parse_mode=html&text=NORMAL AVG: $AVG";fi;fi;) > /dev/null 2>&1
+\# bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)
+
+places this script to /usr/local/bin/loadavg_watcher
+places the cron task to /etc/cron.d
+
+complete!
+
+* Tested on Debian Linux
