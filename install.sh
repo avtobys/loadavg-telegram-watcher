@@ -1,11 +1,11 @@
 #!/bin/bash
 
 install_la() {
-    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors this computer: $(nproc)\n\n"
-    echo -n 'Enter setup value to max load average(1 min): '
+    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors of this computer: $(nproc) \n Recommended max load average value: $(nproc)\n\n"
+    echo -n 'Enter setting value for the maximum load average for 1 minute: '
     read AVG_MAX
     if (($(($AVG_MAX * 1)) > 0)); then
-        SET_AVG_MAX="Max load average 1 min set: $AVG_MAX"
+        SET_AVG_MAX="Max load average for 1 minute set: $AVG_MAX"
         printf "$SET_AVG_MAX\n\n"
     else
         printf "\033[0;31mOnly integer values > 0...\033[0m\n"
