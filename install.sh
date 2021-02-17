@@ -40,7 +40,7 @@ install_la
 install_telegram
 echo -n 'Enter your pastebin.com api developer key(optional): '
 read PASTE_KEY
-printf "Pastebin developer token set:\n\n"
+printf "Pastebin developer token set: $PASTE_KEY\n\n"
 
 IFS=""
 
