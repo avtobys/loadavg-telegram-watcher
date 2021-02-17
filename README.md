@@ -14,4 +14,8 @@ complete!
 
 * Tested on Debian Linux
 
+load 1 processor by 100%  
 \# yes > /dev/null
+
+
+![plot](img/2.png)
