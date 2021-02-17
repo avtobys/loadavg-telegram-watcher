@@ -13,7 +13,7 @@ N=$'\n'
 if [ -n "$AVG" ]; then
     UPTIME=$(uptime)
     if [ -n "$PASTE_KEY" ]; then
-        PASTE="$UPTIME $N $(ps -eo pid,ppid,user,cmd,\%mem,\%cpu --sort=-\%mem | head && mysqladmin processlist)"
+        PASTE="$UPTIME $N $(ps -eo pid,ppid,user,cmd,%mem,%cpu --sort=-%cpu | head && mysqladmin processlist)"
         PASTE_RES=$(curl -X POST --data "api_option=paste&api_user_key=&api_paste_private=1&api_paste_name=high load&api_paste_expire_date=1D&api_paste_format=text&api_dev_key=$PASTE_KEY&api_paste_code=$PASTE" https://pastebin.com/api/api_post.php 2>/dev/null | sed 's/pastebin\.com\//pastebin.com\/raw\//')
     fi
     if [ -n "$BOT_ID" -a -n "$CHAT_ID"]; then
