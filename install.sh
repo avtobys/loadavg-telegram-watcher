@@ -26,6 +26,7 @@ install_telegram() {
     N=$'\n'
     TG_RES=$(curl -s -X POST --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N Settings are almost ready $N $SET_AVG_MAX $N $SET_BOT_ID $N $SET_CHAT_ID" $TG_URL | sed -r 's/.*"ok"[[:space:]]*:[[:space:]]*(true)[[:space:]]*,[[:space:]]*"result".*/\1/')
     if [ "$TG_RES" != "true" ]; then
+        printf "\033[0;31mTelegram bot token or chat id is wrong...\033[0m\n"
         install_telegram
     fi  
 }
