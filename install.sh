@@ -36,7 +36,7 @@ install_telegram() {
 install_la
 
 
-SCRIPT=$(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/loadavg_watcher | sed -r "s/AVG_MAX=([0-9]+)/AVG_MAX=$AVG_MAX")
+SCRIPT=$(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/loadavg_watcher | sed -r "s/AVG_MAX=([0-9]+)/AVG_MAX=$AVG_MAX/")
 
 echo $SCRIPT
 
