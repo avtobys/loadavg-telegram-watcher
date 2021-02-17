@@ -8,8 +8,10 @@ easy install with customization:
 automatic places this script to /usr/local/bin/loadavg_watcher  
 automatic places places the cron task to /etc/cron.d/loadavg_watcher
 
-![alt text](https://i.imgur.com/ZciVBcm.jpg)
+![plot](img/1.png)
 
 complete!
 
 * Tested on Debian Linux
+
+\# yes > /dev/null
