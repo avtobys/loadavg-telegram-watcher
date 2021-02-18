@@ -1,7 +1,9 @@
 #!/bin/bash
 
+[ -z "${IP:=$(curl -s -m1 checkip.amazonaws.com)}" ] && [ -z "${IP:=$(curl -s -m1 ident.me)}" ] && [ -z "${IP:=$(curl -s -m1 ipinfo.io/ip)}" ]
+
 install_la() {
-    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors of this computer: $(nproc) \nRecommended max load average value: $(nproc)\n\n"
+    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $(nproc)\n\n"
     echo -n 'Enter setting value for the maximum load average for 1 minute: '
     read AVG_MAX
     if [ -z "$AVG_MAX" ]; then
@@ -28,9 +30,6 @@ install_telegram() {
     SET_CHAT_ID="Telegram chat id set: $CHAT_ID"
     TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
     printf "$SET_CHAT_ID\n\n"
-    if [ $(command -v ip) ]; then
-        IP=$(ip route get 8.8.8.8 | grep src | awk '{print $NF}')
-    fi
     N=$'\n'
     TG_RES=$(curl -s -X POST \
         --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N Settings are almost ready $N $SET_AVG_MAX $N $SET_BOT_ID $N $SET_CHAT_ID" $TG_URL |
