@@ -29,7 +29,7 @@ install_telegram() {
     TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
     printf "$SET_CHAT_ID\n\n"
     if [ $(command -v ip) ]; then
-        IP=$(ip route get 8.8.8.8 | grep src | awk '{print $NF}')
+        IP=$(curl checkip.amazonaws.com)
     fi
     N=$'\n'
     TG_RES=$(curl -s -X POST \
