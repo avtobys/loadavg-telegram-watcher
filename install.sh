@@ -4,12 +4,17 @@ install_la() {
     printf "Welcome to install programm loadavg telegram watcher! \nNumber processors of this computer: $(nproc) \nRecommended max load average value: $(nproc)\n\n"
     echo -n 'Enter setting value for the maximum load average for 1 minute: '
     read AVG_MAX
+    if [ -z "$AVG_MAX" ]; then
+        printf "\033[0;31mOnly integer values > 0...\033[0m\n"
+        return 1
+    fi
     if (($(($AVG_MAX * 1)) > 0)); then
         SET_AVG_MAX="Max load average for 1 minute set: $AVG_MAX"
         printf "$SET_AVG_MAX\n\n"
+        return 0
     else
         printf "\033[0;31mOnly integer values > 0...\033[0m\n"
-        install_la
+        return 1
     fi
 }
 
@@ -32,12 +37,20 @@ install_telegram() {
         sed -r 's/.*"ok"[[:space:]]*:[[:space:]]*(true)[[:space:]]*,[[:space:]]*"result".*/\1/')
     if [ "$TG_RES" != "true" ]; then
         printf "\033[0;31mTelegram bot token or chat id is wrong...\033[0m\n"
-        install_telegram
+        return 1
+    else
+        return 0
     fi
 }
 
-install_la
-install_telegram
+while ! install_la; do
+    true
+done
+
+while ! install_telegram; do
+    true
+done
+
 echo -n 'Enter your pastebin.com api developer key(optional): '
 read PASTE_KEY
 printf "Pastebin developer token set: $PASTE_KEY\n\n"
@@ -65,8 +78,8 @@ if [ ! -d "/etc/cron.d" ]; then
     exit 1
 fi
 
-echo $SCRIPT > /usr/local/bin/loadavg_watcher
+echo $SCRIPT >/usr/local/bin/loadavg_watcher
 chmod +x /usr/local/bin/loadavg_watcher
-echo '* * * * * root /usr/local/bin/loadavg_watcher > /dev/null 2>&1' > /etc/cron.d/loadavg_watcher
+echo '* * * * * root /usr/local/bin/loadavg_watcher > /dev/null 2>&1' >/etc/cron.d/loadavg_watcher
 echo 'Installation completed successfully!'
 exit 0
