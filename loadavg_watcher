@@ -6,7 +6,7 @@ PASTE_KEY="your_paste_key"       # pastebin.com api developer key
 
 TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
 if [ $(command -v ip) ]; then
-    IP=$(ip route get 8.8.8.8 | grep src | awk '{print $NF}')
+    IP=$(curl checkip.amazonaws.com)
 fi
 AVG=$(awk -v avg_max=${AVG_MAX} '$1>avg_max{print $1}' /proc/loadavg)
 N=$'\n'
