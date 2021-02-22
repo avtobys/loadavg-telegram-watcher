@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [ ! -d "/usr/local/bin" ]; then
+    printf "\033[0;31mNo such directory /usr/local/bin\033[0m\n"
+    exit 1
+fi
+
+if [ ! -d "/etc/cron.d" ]; then
+    printf "\033[0;31mNo such directory /etc/cron.d\033[0m\n"
+    exit 1
+fi
+
 [ -z "${IP:=$(curl -s -m1 checkip.amazonaws.com)}" ] && [ -z "${IP:=$(curl -s -m1 ident.me)}" ] && [ -z "${IP:=$(curl -s -m1 ipinfo.io/ip)}" ]
 
 install_la() {
@@ -64,16 +74,6 @@ SCRIPT=$(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watc
 
 if [ "$(echo $SCRIPT | sed -n 's/.*\(successful installation marker\).*/\1/ip;T;q')" != "successful installation marker" ]; then
     printf "\033[0;31mCan't load script https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/loadavg_watcher\033[0m\n"
-    exit 1
-fi
-
-if [ ! -d "/usr/local/bin" ]; then
-    printf "\033[0;31mNo such directory /usr/local/bin\033[0m\n"
-    exit 1
-fi
-
-if [ ! -d "/etc/cron.d" ]; then
-    printf "\033[0;31mNo such directory /etc/cron.d\033[0m\n"
     exit 1
 fi
 
