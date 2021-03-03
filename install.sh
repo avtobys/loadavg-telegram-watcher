@@ -51,6 +51,8 @@ install_telegram() {
     if [ "$TG_RES" != "true" ]; then
         BOT_ID=
         CHAT_ID=
+        SET_BOT_ID=
+        SET_CHAT_ID=
         printf "\033[0;31mTelegram bot token or chat id is wrong...\033[0m\n"
         return 1
     else
