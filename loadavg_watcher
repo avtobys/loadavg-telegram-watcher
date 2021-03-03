@@ -1,4 +1,7 @@
 #!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH
+
 AVG_MAX=3                        # maximum load avg
 BOT_ID="your_telegram_bot_token" # t.me bot token
 CHAT_ID="your_chat_id"           # t.me chat id

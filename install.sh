@@ -108,6 +108,6 @@ fi
 
 echo $SCRIPT >/usr/local/bin/loadavg_watcher
 chmod +x /usr/local/bin/loadavg_watcher
-echo '* * * * * root /usr/local/bin/loadavg_watcher > /dev/null 2>&1' >/etc/cron.d/loadavg_watcher
+echo -e "PATH=/bin:/sbin:/usr/bin:/usr/sbin\n* * * * * root /usr/local/bin/loadavg_watcher > /dev/null 2>&1" >/etc/cron.d/loadavg_watcher
 echo "Installation completed successfully!"
 exit 0
