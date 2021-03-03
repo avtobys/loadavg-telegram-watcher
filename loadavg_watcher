@@ -1,6 +1,6 @@
 #!/bin/bash
 AVG_MAX=3                        # maximum load avg
-BOT_ID="your_telegram_bot_token" # t.me bot id
+BOT_ID="your_telegram_bot_token" # t.me bot token
 CHAT_ID="your_chat_id"           # t.me chat id
 PASTE_KEY="your_paste_key"       # pastebin.com api developer key
 
