@@ -13,11 +13,11 @@ if [ -n "$AVG" ]; then
     if [ -n "$PASTE_KEY" ]; then
         PASTE="$UPTIME $N $N $(ps -eo pid,ppid,user,cmd,%mem,%cpu --sort=-%cpu | head) $N $N $(ps -eo pid,ppid,user,cmd,%mem,%cpu --sort=-%mem | head)"
         
-        if [ -x "/usr/bin/mysqladmin" ]; then
+        if [ $(command -v mysqladmin) ]; then
             PASTE="$PASTE $N $N $(mysqladmin processlist | head)"
         fi
 
-        if [ -x "/usr/sbin/iotop" ]; then
+        if [ $(command -v iotop) ]; then
             PASTE="$PASTE $N $N $(iotop -n 1 -q -t | head)"
         fi
         

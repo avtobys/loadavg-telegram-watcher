@@ -10,6 +10,7 @@ if [ ! -d "/etc/cron.d" ]; then
     exit 1
 fi
 
+
 [ -z "${IP:=$(curl -s -m1 checkip.amazonaws.com)}" ] && [ -z "${IP:=$(curl -s -m1 ident.me)}" ] && [ -z "${IP:=$(curl -s -m1 ipinfo.io/ip)}" ]
 
 RECOMM=$(awk 'function ceil(x){return int(x)+(x>int(x))} {print ceil($0*1.3)}' <<< $(nproc))
@@ -78,7 +79,26 @@ fi
 
 echo "Pastebin developer token set: $PASTE_KEY"
 
+if [ $(command -v ps) ]; then
+    echo "ps: ok"
+else
+    printf "\033[0;31mCommand ps not found\033[0m\n"
+    exit 1
+fi
 
+echo -n "mysqladmin: "
+if [ $(command -v mysqladmin) ]; then
+    echo "ok"
+else
+    echo "fail"
+fi
+
+echo -n "iotop: "
+if [ $(command -v iotop) ]; then
+    echo "ok"
+else
+    echo "fail"
+fi
 
 IFS=""
 
@@ -96,5 +116,5 @@ fi
 echo $SCRIPT >/usr/local/bin/loadavg_watcher
 chmod +x /usr/local/bin/loadavg_watcher
 echo '* * * * * root /usr/local/bin/loadavg_watcher > /dev/null 2>&1' >/etc/cron.d/loadavg_watcher
-echo 'Installation completed successfully!'
+echo "Installation completed successfully!"
 exit 0
