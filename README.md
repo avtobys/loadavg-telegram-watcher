@@ -10,7 +10,7 @@ the script will ask for missing variables:
 \# AVG_MAX="3"; \  
 BOT_ID="your_telegram_bot_token"; \  
 CHAT_ID="your_chat_id"; \  
-PASTE_KEY="your_paste_key" \  
+PASTE_KEY="your_paste_key"; \  
 bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)
 
 automatic places this script to /usr/local/bin/loadavg_watcher  
