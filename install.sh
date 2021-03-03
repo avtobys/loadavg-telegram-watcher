@@ -17,28 +17,18 @@ RECOMM=$(awk 'function ceil(x){return int(x)+(x>int(x))} {print ceil($0*1.3)}' <
 
 printf "Welcome to install programm loadavg telegram watcher! \n\nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $RECOMM\n\n"
 
-install_la() {
-    if [ -z "$AVG_MAX" ]; then
-        echo -n 'Enter setting value for the maximum load average for 1 minute(0 = recommended): '
-        read AVG_MAX
-    fi
-    if [ "$AVG_MAX" = "0" -o -z "$AVG_MAX" ]; then
-        AVG_MAX=$RECOMM
-    fi
-    if [[ ! "$AVG_MAX" =~ ^[0-9]+$ ]]; then
-        AVG_MAX=""
-        printf "\033[0;31mOnly integer values >= 0...\033[0m\n"
-        return 1
-    fi
-    if (($(($AVG_MAX * 1)) > 0)); then
-        echo ${SET_AVG_MAX:="Max load average for 1 minute set: $AVG_MAX"}
-        return 0
-    else
-        AVG_MAX=""
-        printf "\033[0;31mOnly integer values >= 0...\033[0m\n"
-        return 1
-    fi
-}
+if [ -z "$AVG_MAX" ]; then
+    echo -n 'Enter setting value for the maximum load average for 1 minute(0 = recommended): '
+    read AVG_MAX
+fi
+
+if [ "$AVG_MAX" = "0" -o -z "$AVG_MAX" ]; then
+    AVG_MAX=$RECOMM
+fi
+
+if [[ ! "$AVG_MAX" =~ ^[0-9]+$ ]]; then
+    AVG_MAX=$RECOMM
+fi
 
 install_telegram() {
     if [ -z "$BOT_ID" ]; then
@@ -57,8 +47,8 @@ install_telegram() {
         --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N Settings are almost ready $N $SET_AVG_MAX $N $SET_BOT_ID $N $SET_CHAT_ID" $TG_URL |
         sed -r 's/.*"ok"[[:space:]]*:[[:space:]]*(true)[[:space:]]*,[[:space:]]*"result".*/\1/')
     if [ "$TG_RES" != "true" ]; then
-        BOT_ID=""
-        CHAT_ID=""
+        BOT_ID=
+        CHAT_ID=
         printf "\033[0;31mTelegram bot token or chat id is wrong...\033[0m\n"
         return 1
     else
@@ -66,9 +56,6 @@ install_telegram() {
     fi
 }
 
-while ! install_la; do
-    true
-done
 
 while ! install_telegram; do
     true
