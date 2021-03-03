@@ -15,6 +15,7 @@ fi
 RECOMM=$(awk 'function ceil(x){return int(x)+(x>int(x))} {print ceil($0*1.3)}' <<< $(nproc))
 
 echo $AVG_MAX
+echo $BOT_ID
 echo ok
 
 install_la() {
