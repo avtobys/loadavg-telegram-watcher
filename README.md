@@ -11,10 +11,12 @@ the script will ask for missing variables:
 BOT_ID="your_telegram_bot_token"; \  
 CHAT_ID="your_chat_id"; \  
 PASTE_KEY="your_paste_key"; \  
-sudo bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)
+sudo bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)  
 
-automatic places this script to /usr/local/bin/loadavg_watcher  
-automatic places places the cron task to /etc/cron.d/loadavg_watcher
+AVG_MAX=0 # 0 - for set the recommended value equal to nproc + 30%  
+
+automatic places script to /usr/local/bin/loadavg_watcher  
+automatic places the cron task to /etc/cron.d/loadavg_watcher
 
 ![plot](img/1.png)
 
