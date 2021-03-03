@@ -25,6 +25,9 @@ if [ -n "$AVG" ]; then
         fi
         
         PASTE_RES=$(curl -X POST --data "api_option=paste&api_user_key=&api_paste_private=1&api_paste_name=high load&api_paste_expire_date=1D&api_paste_format=text&api_dev_key=$PASTE_KEY&api_paste_code=$PASTE" https://pastebin.com/api/api_post.php 2>/dev/null | sed 's/pastebin\.com\//pastebin.com\/raw\//')
+        if [[ ! "$PASTE_RES" =~ ^https://pastebin ]]; then
+            PASTE_RES=
+        fi
     fi
     if [ -n "$BOT_ID" -a -n "$CHAT_ID" ]; then
         [ -z "${IP:=$(curl -s -m1 checkip.amazonaws.com)}" ] && [ -z "${IP:=$(curl -s -m1 ident.me)}" ] && [ -z "${IP:=$(curl -s -m1 ipinfo.io/ip)}" ]
