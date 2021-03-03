@@ -3,7 +3,7 @@ monitors the load average server and in case of problems sends problem messages 
 
 easy install with customization:
 
-\# bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)  
+\# sudo bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)  
 
 the script will ask for missing variables:  
 
@@ -11,7 +11,7 @@ the script will ask for missing variables:
 BOT_ID="your_telegram_bot_token"; \  
 CHAT_ID="your_chat_id"; \  
 PASTE_KEY="your_paste_key"; \  
-bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)
+sudo bash <(curl -s https://raw.githubusercontent.com/avtobys/loadavg-telegram-watcher/main/install.sh)
 
 automatic places this script to /usr/local/bin/loadavg_watcher  
 automatic places places the cron task to /etc/cron.d/loadavg_watcher
