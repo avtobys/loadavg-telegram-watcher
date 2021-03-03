@@ -24,6 +24,7 @@ install_la() {
         AVG_MAX=$RECOMM
     fi
     if [[ ! "$AVG_MAX" =~ ^[0-9]+$ ]]; then
+        AVG_MAX=""
         printf "\033[0;31mOnly integer values >= 0...\033[0m\n"
         return 1
     fi
@@ -31,6 +32,7 @@ install_la() {
         echo ${SET_AVG_MAX:="Max load average for 1 minute set: $AVG_MAX"}
         return 0
     else
+        AVG_MAX=""
         printf "\033[0;31mOnly integer values >= 0...\033[0m\n"
         return 1
     fi
