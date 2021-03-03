@@ -15,9 +15,9 @@ fi
 RECOMM=$(awk 'function ceil(x){return int(x)+(x>int(x))} {print ceil($0*1.3)}' <<< $(nproc))
 
 install_la() {
-    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $RECOMM\n\n"
-    echo -n 'Enter setting value for the maximum load average for 1 minute(0 = recommended): '
+    printf "Welcome to install programm loadavg telegram watcher! \n\nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $RECOMM\n\n"
     if [ -z "$AVG_MAX" ]; then
+        echo -n 'Enter setting value for the maximum load average for 1 minute(0 = recommended): '
         read AVG_MAX
     fi
     if [ -z "$AVG_MAX" ]; then
@@ -28,29 +28,26 @@ install_la() {
         AVG_MAX=$RECOMM
     fi
     if (($(($AVG_MAX * 1)) > 0)); then
-        SET_AVG_MAX="Max load average for 1 minute set: $AVG_MAX"
-        printf "$SET_AVG_MAX\n\n"
+        echo ${SET_AVG_MAX:="Max load average for 1 minute set: $AVG_MAX"}
         return 0
     else
-        printf "\033[0;31mOnly integer values > 0...\033[0m\n"
+        printf "\033[0;31mOnly integer values >= 0...\033[0m\n"
         return 1
     fi
 }
 
 install_telegram() {
-    echo -n 'Enter your telegram bot token: '
     if [ -z "$BOT_ID" ]; then
+        echo -n 'Enter your telegram bot token: '
         read BOT_ID
     fi
-    SET_BOT_ID="Telegram bot token set: $BOT_ID"
-    printf "$SET_BOT_ID\n\n"
-    echo -n 'Enter your telegram chat id: '
+    echo ${SET_BOT_ID:="Telegram bot token set: $BOT_ID"}
     if [ -z "$CHAT_ID" ]; then
+        echo -n 'Enter your telegram chat id: '
         read CHAT_ID
     fi
-    SET_CHAT_ID="Telegram chat id set: $CHAT_ID"
+    echo ${SET_CHAT_ID:="Telegram chat id set: $CHAT_ID"}
     TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
-    printf "$SET_CHAT_ID\n\n"
     N=$'\n'
     TG_RES=$(curl -s -X POST \
         --data "chat_id=$CHAT_ID&parse_mode=html&text=$IP $N Settings are almost ready $N $SET_AVG_MAX $N $SET_BOT_ID $N $SET_CHAT_ID" $TG_URL |
@@ -71,11 +68,14 @@ while ! install_telegram; do
     true
 done
 
-echo -n 'Enter your pastebin.com api developer key(optional): '
 if [ -z "$PASTE_KEY" ]; then
+    echo -n 'Enter your pastebin.com api developer key(optional): '
     read PASTE_KEY
 fi
-printf "Pastebin developer token set: $PASTE_KEY\n\n"
+
+echo "Pastebin developer token set: $PASTE_KEY"
+
+
 
 IFS=""
 
