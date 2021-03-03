@@ -30,6 +30,8 @@ if [[ ! "$AVG_MAX" =~ ^[0-9]+$ ]]; then
     AVG_MAX=$RECOMM
 fi
 
+echo ${SET_AVG_MAX:="Max load average set: $AVG_MAX"}
+
 install_telegram() {
     if [ -z "$BOT_ID" ]; then
         echo -n 'Enter your telegram bot token: '
