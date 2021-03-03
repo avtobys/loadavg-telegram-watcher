@@ -7,7 +7,7 @@ easy install with customization:
 
 the script will ask for missing variables:  
 
-\# sudo /bin/bash -c "\  
+\# sudo /bin/bash -c " \  
 AVG_MAX='3'; \  
 BOT_ID='your_telegram_bot_token'; \  
 CHAT_ID='your_chat_id'; \  
