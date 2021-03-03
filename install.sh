@@ -20,12 +20,12 @@ install_la() {
         echo -n 'Enter setting value for the maximum load average for 1 minute(0 = recommended): '
         read AVG_MAX
     fi
-    if [ -z "$AVG_MAX" ]; then
+    if [ "$AVG_MAX" = "0" ]; then
+        AVG_MAX=$RECOMM
+    fi
+    if [[ ! "$AVG_MAX" =~ ^[0-9]+$ ]]; then
         printf "\033[0;31mOnly integer values >= 0...\033[0m\n"
         return 1
-    fi
-    if (( $AVG_MAX == 0 )); then
-        AVG_MAX=$RECOMM
     fi
     if (($(($AVG_MAX * 1)) > 0)); then
         echo ${SET_AVG_MAX:="Max load average for 1 minute set: $AVG_MAX"}
