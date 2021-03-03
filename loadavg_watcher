@@ -18,7 +18,7 @@ if [ -n "$AVG" ]; then
         fi
 
         if [ $(command -v iotop) ]; then
-            PASTE="$PASTE $N $N $(iotop -n 1 -q -t | head)"
+            PASTE="$PASTE $N $N $(iotop -n 2 -q -t | head)"
         fi
         
         PASTE_RES=$(curl -X POST --data "api_option=paste&api_user_key=&api_paste_private=1&api_paste_name=high load&api_paste_expire_date=1D&api_paste_format=text&api_dev_key=$PASTE_KEY&api_paste_code=$PASTE" https://pastebin.com/api/api_post.php 2>/dev/null | sed 's/pastebin\.com\//pastebin.com\/raw\//')
