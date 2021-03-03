@@ -14,8 +14,9 @@ fi
 
 RECOMM=$(awk 'function ceil(x){return int(x)+(x>int(x))} {print ceil($0*1.3)}' <<< $(nproc))
 
+printf "Welcome to install programm loadavg telegram watcher! \n\nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $RECOMM\n\n"
+
 install_la() {
-    printf "Welcome to install programm loadavg telegram watcher! \n\nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $RECOMM\n\n"
     if [ -z "$AVG_MAX" ]; then
         echo -n 'Enter setting value for the maximum load average for 1 minute(0 = recommended): '
         read AVG_MAX
