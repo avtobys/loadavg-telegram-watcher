@@ -12,10 +12,14 @@ fi
 
 [ -z "${IP:=$(curl -s -m1 checkip.amazonaws.com)}" ] && [ -z "${IP:=$(curl -s -m1 ident.me)}" ] && [ -z "${IP:=$(curl -s -m1 ipinfo.io/ip)}" ]
 
+RECOMM=$(awk 'function ceil(x){return int(x)+(x>int(x))} {print ceil($0*1.3)}' <<< $(nproc))
+
 install_la() {
-    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $(nproc)\n\n"
+    printf "Welcome to install programm loadavg telegram watcher! \nNumber processors of this computer[$IP]: $(nproc) \nRecommended max load average value: $RECOMM\n\n"
     echo -n 'Enter setting value for the maximum load average for 1 minute: '
-    read AVG_MAX
+    if [ -z "$AVG_MAX" ]; then
+        read AVG_MAX
+    fi
     if [ -z "$AVG_MAX" ]; then
         printf "\033[0;31mOnly integer values > 0...\033[0m\n"
         return 1
@@ -32,11 +36,15 @@ install_la() {
 
 install_telegram() {
     echo -n 'Enter your telegram bot token: '
-    read BOT_ID
+    if [ -z "$BOT_ID" ]; then
+        read BOT_ID
+    fi
     SET_BOT_ID="Telegram bot token set: $BOT_ID"
     printf "$SET_BOT_ID\n\n"
     echo -n 'Enter your telegram chat id: '
-    read CHAT_ID
+    if [ -z "$CHAT_ID" ]; then
+        read CHAT_ID
+    fi
     SET_CHAT_ID="Telegram chat id set: $CHAT_ID"
     TG_URL="https://api.telegram.org/bot$BOT_ID/sendMessage"
     printf "$SET_CHAT_ID\n\n"
@@ -61,7 +69,9 @@ while ! install_telegram; do
 done
 
 echo -n 'Enter your pastebin.com api developer key(optional): '
-read PASTE_KEY
+if [ -z "$PASTE_KEY" ]; then
+    read PASTE_KEY
+fi
 printf "Pastebin developer token set: $PASTE_KEY\n\n"
 
 IFS=""
